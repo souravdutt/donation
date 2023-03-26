@@ -65,7 +65,7 @@ class CheckoutController extends Controller
             $donation->status = 'unpaid';
             $donation->amount = $request->amount;
             $donation->mobile = $request->mobile;
-            $donation->Street_address = $request->Street_address;
+            $donation->street_address = $request->street_address;
             $donation->country_id = $request->country;
             $donation->state_id = $request->state;
             $donation->city_id = $request->city;

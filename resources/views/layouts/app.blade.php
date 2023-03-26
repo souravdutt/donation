@@ -86,7 +86,20 @@
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script>
+        $(function(){
+            $("input.mobile").on("keyup", function(){
+                let str = $(this).val();
+                str = str.replace(/[^0-9\s]/gi, '').replace(/[_\s]/g, '');
+                str = str.length > 10 ? str.substr(0,10) : str;
+                $(this).val(str);
+            })
 
+            $("input.required, select.required, textarea.required").parent().find("label").append("<span class='text-danger'> *</span>")
+
+            $("input.optional, select.optional, textarea.optional").parent().find("label").append("<small class='text-muted'> (optional)</small>")
+        });
+    </script>
     @yield('javascript')
 </body>
 

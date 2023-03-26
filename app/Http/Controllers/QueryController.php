@@ -24,7 +24,7 @@ class QueryController extends Controller
         }
 
         if(auth()->user()->role !== 'admin')
-            return redirect()->route('admin.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
+            return redirect()->route('auth.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
 
         return view('admin.auth.queries');
     }

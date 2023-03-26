@@ -35,12 +35,13 @@ class DonationController extends Controller
         }
 
         if(auth()->user()->role !== 'admin')
-            return redirect()->route('admin.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
+            return redirect()->route('auth.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
 
         return view('admin.auth.donation');
 
     }
-    public function leaderboardstatus(Request $req)
+
+    public function leaderBoardStatus(Request $req)
     {
         if(auth()->user()->role !== 'admin')
             return response()->json(['error' => 'You\'re not authorized.'], 401);
@@ -58,6 +59,7 @@ class DonationController extends Controller
 
         return response()->json(['error' => 'Something went wrong'], 500);
     }
+
     public function delete(Request $req)
     {
         if(auth()->user()->role !== 'admin')
@@ -67,12 +69,11 @@ class DonationController extends Controller
             'id' => 'required|exists:donation,id',
         ]);
 
-
         $donation = Donation::where('id',$req->id)->first();
+
         if($donation->delete())
             return response()->json(['success' => 'Donation deleted successfully'], 200);
 
         return response()->json(['error' => 'Something went wrong'], 500);
     }
-
 }

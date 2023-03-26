@@ -37,15 +37,15 @@ Route::prefix('admin')->middleware('auth')->name('auth.')->group(function () {
 
     Route::get('/donation', [ DonationController::class, 'donation'])->name('donation');
     Route::delete('/donation', [ DonationController::class, 'delete'])->name('donation.delete');
-    Route::put('/leaderboard-status', [ DonationController::class, 'leaderboardStatus'])->name('donation.leaderboard-status');
+    Route::put('/leaderboard-status', [ DonationController::class, 'leaderBoardStatus'])->name('donation.leaderboard-status');
     Route::get('/queries', [ QueryController::class, 'queries'])->name('queries');
     Route::delete('/queries', [ QueryController::class, 'delete'])->name('querie.delete');
     Route::get('/albums', [ PagesController::class, 'albums'])->name('albums');
-    Route::delete('/albums', [ PagesController::class, 'deletealbums'])->name('albums.delete');
+    Route::delete('/albums', [ PagesController::class, 'deleteAlbums'])->name('albums.delete');
     Route::post('/albums', [ PagesController::class, 'addAlbums'])->name('albums.add');
     Route::put('/albums', [ PagesController::class, 'updateAlbums'])->name('albums.update');
     Route::get('/media', [ PagesController::class, 'media'])->name('media');
-    Route::delete('/media', [ PagesController::class, 'deletemedia'])->name('media.delete');
+    Route::delete('/media', [ PagesController::class, 'deleteMedia'])->name('media.delete');
     Route::get('/members', [ PagesController::class, 'members'])->name('members');
     Route::post('/members', [ PagesController::class, 'addMembers'])->name('members.add');
     Route::put('/members', [ PagesController::class, 'updateMember'])->name('members.update');
@@ -58,7 +58,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home.index');
 Route::get('contact', [HomeController::class, 'contact'])->name('home.contact');
 Route::get('about', [HomeController::class, 'about'])->name('home.about');
 Route::get('leaderboard', [HomeController::class, 'leaderboard'])->name('home.leaderboard');
-Route::post('contact/form', [HomeController::class, 'contactform'])->name('contact.form');
+Route::post('contact', [HomeController::class, 'contactSubmit'])->name('home.contact.submit');
 Route::get('donate', [HomeController::class, 'donate'])->name('home.donate');
 Route::get('albums', [HomeController::class, 'albums'])->name('home.albums');
 Route::get('privacy', [HomeController::class, 'privacy'])->name('home.privacy-policy');

@@ -5,12 +5,13 @@
 
         <section class="jumbotron text-center">
             <div class="container">
-                <h1 class="jumbotron-heading">Album example</h1>
-                <p class="lead text-muted">Something short and leading about the collection below—its contents, the creator,
-                    etc. Make it short and sweet, but not too short so folks don't simply skip over it entirely.</p>
+                <h1 class="jumbotron-heading mt-5">Album</h1>
                 <p>
-                    <a href="#" class="btn btn-primary my-2">Main call to action</a>
-                    <a href="#" class="btn btn-secondary my-2">Secondary action</a>
+                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem alias, minima ut,
+                    ab repudiandae nostrum mollitia vero, vel sit deserunt molestias fugit inventore
+                    dicta omnis natus aut culpa. Quos pariatur, a voluptates minima nemo fugiat amet
+                    non corporis, quaerat placeat esse tempora exercitationem dicta distinctio quasi
+                    vel accusantium nulla modi.
                 </p>
             </div>
         </section>
@@ -43,15 +44,14 @@
                           <p class="card-text"><b>{{$album->name}}</b></p>
                           <p class="card-text">{{$album->description}}</p>
                           <div class="d-flex justify-content-between align-items-center">
-                          {{-- <div class="btn-group">
-                            <button type="button" class="btn btn-sm btn-outline-secondary px-4">View</button>
-                          </div>
-                          <small class="text-muted">9 mins</small> --}}
                         </div>
                       </div>
                     </div>
                   </div>
                   @endforeach
+                  <div class="d-flex justify-content-center mt-2">
+                    {{ $albums->onEachSide(0)->links() }}
+                  </div>
                 </div>
             </div>
         </div>

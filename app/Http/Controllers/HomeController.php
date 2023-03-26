@@ -47,10 +47,12 @@ class HomeController extends Controller
         $albums = Albums::select('*')
             ->with('media')
             ->where('albums.status', 1)
-            ->get();
+            ->paginate(12);
+
         return view('albums',compact('albums'));
     }
-    public function contactform(Request $request)
+
+    public function contactSubmit(Request $request)
     {
         $request->validate([
             'name' => 'required|string|max:50',
@@ -65,15 +67,16 @@ class HomeController extends Controller
             $contact->mobile = $request->mobile;
             $contact->message = $request->message;
             $contact->save();
-            return redirect('contact')->with(['success' => 'Contact Form submited successfully']);
+            return redirect()->back()->with(['success' => 'Contact Form submited successfully']);
         } catch (\Exception $e) {
-            return redirect('contact')->with(['error' => 'Something went wrong.[' . $e->getMessage() . ']'])->withInput();
+            return redirect()->back()->with(['error' => 'Something went wrong.[' . $e->getMessage() . ']'])->withInput();
         }
     }
     public function privacy()
     {
         return view('privacy');
     }
+
     public function leaderboard()
     {
         $donors = Donation::select('donation.*', 'cities.name as city_name', 'countries.name as country_name')

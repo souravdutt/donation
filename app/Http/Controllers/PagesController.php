@@ -29,33 +29,33 @@ class PagesController extends Controller
         }
 
         if(auth()->user()->role !== 'admin')
-            return redirect()->route('admin.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
-            return view('admin.auth.albums');
+            return redirect()->route('auth.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
+
+        return view('admin.auth.albums');
     }
 
     public function media(request $request)
     {
-        if(auth()->user()->role !== 'admin')
-            return redirect()->route('admin.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
-        if(request()->ajax()) {
-            if(auth()->user()->role !== 'admin')
-            return response()->json(['error' => 'You\'re not authorized'], 401);
-            $media = media::select('name','id')->where('album_id',$request->id)->get()->toArray();
-
-            return response()->json(['success' => 'successfully', 'data' => $media], 200);
-        }
-        return response()->json(['error' => 'Something went wrong'], 500);
-
-    }
-
-    public function deletealbums(Request $req)
-    {
-        if(auth()->user()->role !== 'admin')
-            return response()->json(['error' => 'You\'re not authorized.'], 401);
-
         if(request()->ajax()) {
             if(auth()->user()->role !== 'admin')
                 return response()->json(['error' => 'You\'re not authorized'], 401);
+
+            $media = media::select('name','id')->where('album_id',$request->id)->get()->toArray();
+
+            if(!empty($media))
+                return response()->json(['success' => true, 'data' => $media], 200);
+
+            return response()->json(['error' => 'Something went wrong'], 500);
+        }
+
+    }
+
+    public function deleteAlbums(Request $req)
+    {
+        if(request()->ajax()) {
+            if(auth()->user()->role !== 'admin')
+                return response()->json(['error' => 'You\'re not authorized'], 401);
+
             $req->validate([
                 'id' => 'required|exists:albums,id',
             ]);
@@ -82,11 +82,8 @@ class PagesController extends Controller
         }
     }
 
-    public function deletemedia(Request $req)
+    public function deleteMedia(Request $req)
     {
-        if(auth()->user()->role !== 'admin')
-            return response()->json(['error' => 'You\'re not authorized.'], 401);
-
         if(request()->ajax()) {
             if(auth()->user()->role !== 'admin')
                 return response()->json(['error' => 'You\'re not authorized'], 401);
@@ -109,7 +106,6 @@ class PagesController extends Controller
                 return response()->json(['error' => 'Unable to delete album. ' . '[' . $e->getMessage() . ']']);
             }
         }
-        return response()->json(['error' => 'Something went wrong'], 500);
     }
 
     public function addAlbums(request $request)
@@ -171,9 +167,6 @@ class PagesController extends Controller
                 // send error response
                 return response()->json(['error' => 'Something went wrong [' . $e->getMessage() . ']'], 500);
             }
-
-        if(auth()->user()->role !== 'admin')
-            return redirect()->route('admin.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
         }
 
     }
@@ -239,7 +232,7 @@ class PagesController extends Controller
     public function members()
     {
         if(auth()->user()->role !== 'admin')
-            return redirect()->route('admin.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
+            return redirect()->route('auth.dashboard')->with(['error' => 'Oops! You are not authorized to access this page.']);
 
         $members = Members::all();
 
@@ -282,18 +275,17 @@ class PagesController extends Controller
 
     public function deleteMembers(request $request)
     {
-        if(auth()->user()->role !== 'admin')
-            return response()->json(['error' => 'You\'re not authorized.'], 401);
-
         if(request()->ajax()) {
             if(auth()->user()->role !== 'admin')
                 return response()->json(['error' => 'You\'re not authorized'], 401);
+
             $request->validate([
                 'id' => 'required|exists:members,id',
             ]);
 
             $member = Members::where('id',$request->id)->first();
             $image = $member->image;
+
             if($member->delete()){
                 File::delete("images/members/".$image);
                 return response()->json(['success' => 'Member deleted successfully'], 200);

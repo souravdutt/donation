@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('members', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->varchar('designation');
+            $table->string('designation');
             $table->text('quote');
             $table->string('image',255);
             $table->timestamps();

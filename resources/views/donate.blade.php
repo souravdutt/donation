@@ -230,10 +230,10 @@
                                 </div>
                                 <div class="col-md-12">
                                     <label class="mb-0">Amount you want to donate <small class="text-muted">(Minimum
-                                            &#8377;{{env('MIN_DONATION_AMOUNT')}})</small></label>
+                                           @if(env("DONATION_CURRENCY") == "USD") $@elseif(env("DONATION_CURRENCY") == "INR")&#8377;@else{{ env("DONATION_CURRENCY") }}@endif{{number_format(env('MIN_DONATION_AMOUNT'),2,".",",")}})</small></label>
                                     <input type="number" class="form-control form-control-lg mb-1 required"
                                         name="amount" value="{{ old('amount') }}"
-                                        placeholder="Donation Amount in &#8377 (INR)" min="{{env('MIN_DONATION_AMOUNT')}}">
+                                        placeholder="Donation Amount in @if(env("DONATION_CURRENCY") == "USD") $ (USD) @elseif(env("DONATION_CURRENCY") == "INR") &#8377; (INR) @else {{ env("DONATION_CURRENCY") }} @endif" min="{{env('MIN_DONATION_AMOUNT')}}">
                                 </div>
                                 <div class="col-md-12">
                                     <div class="form-check form-switch fw-bold">
@@ -265,17 +265,6 @@
 @section('javascript')
     <script>
         $(function() {
-            $(".mobile").on("keyup", function(){
-                let str = $(this).val();
-                str = str.replace(/[^0-9\s]/gi, '').replace(/[_\s]/g, '');
-                str = str.length > 10 ? str.substr(0,10) : str;
-                $(this).val(str);
-            })
-            $("input.required, select.required").parent().find("label").append(
-                "<span class='text-danger'> *</span>")
-            $("input.optional, select.optional").parent().find("label").append(
-                "<small class='text-muted'> (optional)</small>")
-
             $(document).on('submit', '#payment-form', function(e) {
                 let form = $(this);
 

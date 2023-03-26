@@ -5,6 +5,31 @@
 
 @section('content')
     <div class="container-fluid p-0">
+        @if ($errors->any())
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+                <strong>Oops!</strong> Please clear below errors:
+                <ul>{!! implode('', $errors->all('<li>:message</li>')) !!}</ul>
+            </div>
+        @endif
+
+        @if (Session::has('error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+
+                <strong>Oops!</strong> {{ Session::get('error') }}
+            </div>
+        @endif
+        @if (Session::has('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                    aria-label="Close"></button>
+
+                {{ Session::get('success') }}
+            </div>
+        @endif
 
         <h1 class="h3 mb-3">Dashboard</h1>
 
