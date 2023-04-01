@@ -27,7 +27,7 @@
                         <div class="carousel-inner">
                           @foreach($album->media as $k => $media)
                           <div class="carousel-item {{ $k == 0 ? "active" : "" }}">
-                            <img src="{{ asset('images/albums/'.$media->name)}}" class="d-block w-100" alt="...">
+                            <div class="w-100 h-200px" style="background: #333 url('{{ asset('images/albums/'.$media->name)}}') center center no-repeat;background-size:cover;"></div>
                           </div>
                           @endforeach
                         </div>
@@ -41,10 +41,14 @@
                         </button>
                       </div>
                       <div class="card-body">
-                          <p class="card-text"><b>{{$album->name}}</b></p>
-                          <p class="card-text">{{$album->description}}</p>
+                          <h6 class="card-text"><b>{{$album->name}}</b></h6>
+                          <small class="card-text text-italic">{{\Str::words(strip_tags($album->description), 10, '...')}}</small>
                           <div class="d-flex justify-content-between align-items-center">
                         </div>
+                      </div>
+                      <div class="card-footer bg-white text-end">
+                        <a href="#" class="btn btn-warning btn-sm"><i class="fa fa-share-alt"></i> Share</a>
+                        <a href="#" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Read More</a>
                       </div>
                     </div>
                   </div>

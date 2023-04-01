@@ -18,7 +18,22 @@
         .container {
             max-width: 960px;
         }
-
+        .h-50px{ height: 50px; }
+        .h-100px{ height: 100px; }
+        .h-150px{ height: 150px; }
+        .h-200px{ height: 200px; }
+        .h-250px{ height: 250px; }
+        .h-300px{ height: 300px; }
+        .h-400px{ height: 400px; }
+        .h-500px{ height: 500px; }
+        .w-50px{ width: 50px; }
+        .w-100px{ width: 100px; }
+        .w-150px{ width: 150px; }
+        .w-200px{ width: 200px; }
+        .w-250px{ width: 250px; }
+        .w-300px{ width: 300px; }
+        .w-400px{ width: 400px; }
+        .w-500px{ width: 500px; }
         .select2-container .select2-selection{
             height: 36px;
             border: var(--bs-border-width) solid var(--bs-border-color);
