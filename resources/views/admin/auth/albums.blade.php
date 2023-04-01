@@ -1,4 +1,14 @@
 @extends('admin.auth.layouts.app')
+
+@section('styles')
+    <style>
+        .ck-editor__editable_inline {
+            min-height: 300px;
+        }
+    </style>
+    {{-- <link rel="stylesheet" type="text/css" href="{{ asset('vendor/ckeditor5/sample/styles.css') }}"> --}}
+@endsection
+
 @section('content')
     <div class="container-fluid p-0">
         <h1 class="h3 mb-3"><i class="fa fa-file-image"></i> Albums</h1>
@@ -57,86 +67,149 @@
     {{-- add form modal --}}
     <div class="modal fade" id="add-album-modal-id" tabindex="-1" data-bs-keyboard="false" role="dialog"
         aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-lg" role="document">
-            <div class="modal-content">
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-fullscreen" role="document">
+            <form class="modal-content add-album-form">
                 <div class="modal-header">
-                    <h5 class="modal-title">Add new Album</h5>
+                    <h4 class="modal-title fw-bold">Add new Album</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
-                <div class="modal-body text-center">
-                    <form class="add-album-form">
-                        <div class="text-end">
-                            <button type="button" class="btn btn-outline-danger btn-sm d-none delete-images-btn mb-2"><i
-                                    class="fa fa-trash"></i> Empty Album</button>
-                        </div>
-                        <div class="image-gallery row">
-                            {{-- media gallery when uploaded --}}
-                            <div class="new-media-container"></div>
-                        </div>
-                        <label for="add-album" role="button" class="mb-md-2">
-                            <div class="border border-2 rounded p-2">
-                                <i class="fa fa-upload fa-3x text-muted"></i>
-                                <span class="d-block">Click here to upload media</span>
+                <div class="modal-body bg-light">
+                    <div class="row">
+                        <div class="col-md-4 order-md-2">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h5 class="mb-0 fw-bold">Album Media</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="text-end">
+                                        <button type="button" class="btn btn-outline-danger btn-sm d-none delete-images-btn mb-2"><i
+                                                class="fa fa-trash"></i> Empty Album</button>
+                                    </div>
+                                    <div class="image-gallery row">
+                                        {{-- media gallery when uploaded --}}
+                                        <div class="new-media-container"></div>
+                                    </div>
+                                    <label for="add-album" role="button" class="mb-md-2">
+                                        <div class="border border-2 rounded p-2">
+                                            <i class="fa fa-upload fa-3x text-muted"></i>
+                                            <span class="d-block">Click here to upload media</span>
+                                        </div>
+                                        {{-- <div class="default-image-preview rounded-circle mb-2 mx-auto" style="width:150px; height:150px; background:url({{ asset('images/icon/icon.png') }}) center no-repeat ; background-size :cover;" data-default-image="{{ asset('images/icon/icon.png') }}"></div> --}}
+                                        <input type="file" hidden id="add-album" name="images[]" accept="image/*" multiple>
+                                    </label>
+                                </div>
                             </div>
-                            {{-- <div class="default-image-preview rounded-circle mb-2 mx-auto" style="width:150px; height:150px; background:url({{ asset('images/icon/icon.png') }}) center no-repeat ; background-size :cover;" data-default-image="{{ asset('images/icon/icon.png') }}"></div> --}}
-                            <input type="file" hidden id="add-album" name="images[]" accept="image/*" multiple>
-                        </label>
-                        <input type="text" class="form-control form-control-sm mb-1" name="name"
-                            value="{{ old('name') }}" placeholder="Album Name">
-                        <input type="text" class="form-control form-control-sm mb-1" name="description"
-                            value="{{ old('description') }}" placeholder="Album Description">
-                        <div class="form-check form-control-sm mb-1">
-                            <input class="form-check-input" type="checkbox" value="1" name="status">
-                            <label class="form-check-label" for="flexCheckDefault">
-                                Show in albums
-                            </label>
                         </div>
-                        <button type="submit" class="btn btn-sm btn-primary w-100 mt-1 addalbum">Add Album</button>
-                    </form>
+                        <div class="col-md-8">
+                            <input type="text" class="form-control form-control-lg mb-1 fw-bold" name="title"
+                                placeholder="Album Title">
+                            <textarea class="form-control mb-1 editor" name="description"></textarea>
+                            <div class="form-check form-control-sm mb-1 text-end">
+                                <label class="form-check-label" role="button">
+                                    <input class="form-check-input" type="checkbox" value="1" name="status" checked>
+                                    Show in Albums?
+                                </label>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-            </div>
+                <div class="card-footer border-top py-1">
+                    <button type="submit" class="btn btn-primary px-4 add-album">Add Album</button>
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
     {{-- update modal form --}}
     <div class="modal fade" id="update-album-modal-id" tabindex="-1" data-bs-keyboard="false" role="dialog" aria-labelledby="modalTitleId" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title">Update Album</h5>
+        <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered modal-fullscreen" role="document">
+            <form class="modal-content update-album-form">
+                <div class="modal-header border-bottom">
+                    <h4 class="modal-title fw-bold">Update Album</h4>
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
 
-                <div class="modal-body text-center">
-                    <form class="update-album-form">
-                        <div class="media-container">
-                            <div class="old-media-container row"></div>
-                            <div class="text-end">
-                                <button type="button" class="btn btn-outline-danger btn-sm d-none delete-images-btn mb-2"><i
-                                        class="fa fa-trash"></i> Empty Album</button>
+                <div class="modal-body bg-light">
+                    <div class="row">
+                        <div class="col-md-4 order-md-2">
+                            <div class="card">
+                                <div class="card-header border-bottom">
+                                    <h5 class="mb-0 fw-bold">Album Media</h5>
+                                </div>
+                                <div class="card-body text-center">
+                                    <div class="media-container">
+                                        <div class="old-media-container row"></div>
+                                        <div class="text-end">
+                                            <button type="button" class="btn btn-outline-danger btn-sm d-none delete-images-btn mb-2"><i
+                                                    class="fa fa-trash"></i> Empty Album</button>
+                                        </div>
+                                        <div class="new-media-container row"></div>
+                                    </div>
+                                    <label for="edit-album" role="button" class="mb-md-2">
+                                        <div class="border border-2 rounded p-2">
+                                            <i class="fa fa-upload fa-3x text-muted"></i>
+                                            <span class="d-block">Click here to upload media</span>
+                                        </div>
+                                        <input type="file" hidden id="edit-album" name="images[]" accept="image/*" multiple>
+                                    </label>
+                                </div>
                             </div>
-                            <div class="new-media-container row"></div>
                         </div>
-                        <input type="hidden" name="id" value="">
-                        <label for="edit-album" role="button" class="mb-md-2">
-                            <div class="border border-2 rounded p-2">
-                                <i class="fa fa-upload fa-3x text-muted"></i>
-                                <span class="d-block">Click here to upload media</span>
+                        <div class="col-md-8">
+                            <input type="hidden" name="id" value="">
+                            <input type="text" class="form-control form-control-lg mb-1 fw-bold" name="title" placeholder="Album Title">
+                            <textarea class="form-control mb-1 update-editor" name="description"></textarea>
+                            <div class="form-check mb-1 text-end">
+                                <label class="form-check-label" role="button">
+                                    <input class="form-check-input" type="checkbox" value="1" name="status" checked>
+                                    Show in Albums?
+                                </label>
                             </div>
-                            <input type="file" hidden id="edit-album" name="images[]" accept="image/*" multiple>
-                        </label>
-                        <input type="text" class="form-control form-control-sm mb-1" name="name" value="{{ old('name') }}" placeholder="Album Name">
-                        <input type="text" class="form-control form-control-sm mb-1" name="description" value="{{ old('description') }}" placeholder="Album Description">
-                        <textarea class="form-control form-control-sm" name="status" placeholder="status">{{ old('status') }}</textarea>
-                        <button type="submit" class="btn btn-sm btn-primary w-100 mt-1 update-album-submit">Update album</button>
-                    </form>
+                        </div>
+                    </div>
                 </div>
-            </div>
+
+                <div class="card-footer border-top py-1 py-2">
+                    <button type="submit" class="btn btn-primary px-4 update-album-submit">Update album</button>
+                    <button type="button" class="btn btn-secondary px-4" data-bs-dismiss="modal">Close</button>
+                </div>
+            </form>
         </div>
     </div>
 @endsection
 @section('scripts')
+    <script src="{{ asset('vendor/ckeditor5-clasic-36.0.1/ckeditor.js') }}"></script>
     <script>
         $(function() {
+            let AddEditor;
+            ClassicEditor
+                .create( document.querySelector( 'textarea.editor' ),{
+                    ckfinder: {
+                        uploadUrl: "{{ route('auth.upload.media', 'album') . '?_token=' . csrf_token() }}",
+                    }
+                })
+                .then( editor => {
+                    AddEditor = editor;
+                    // console.log( editor );
+                })
+                .catch( error => {
+                    console.error( error );
+            });
+
+            let UpdateEditor;
+            ClassicEditor
+                .create( document.querySelector( 'textarea.update-editor' ),{
+                    ckfinder: {
+                        uploadUrl: "{{ route('auth.upload.media', 'album') . '?_token=' . csrf_token() }}",
+                    }
+                })
+                .then( editor => {
+                    UpdateEditor = editor;
+                })
+                .catch( error => {
+                    console.error( error );
+            });
+
             loadTable(".albums-datatable");
 
             function loadTable(table, data = {}) {
@@ -168,7 +241,7 @@
                             data: 'status',
                             name: 'status',
                             render: function(data, type, row) {
-                                return data ? '<span class="status">' + data + '</span>' : '';
+                                return data ? '<span class="status badge bg-success">Active</span>' : '<span class="badge bg-danger">Inactive</span>';
                             }
                         },
                         {
@@ -239,7 +312,7 @@
                                     return value;
                                 }).join("\n"));
                         } else if (response.responseJSON.error) {
-                            alert(data.responseJSON.error);
+                            alert(response.responseJSON.error);
                         } else {
                             alert("Something went wrong. Please try again later.");
                         }
@@ -264,10 +337,8 @@
             $(document).on("submit", ".add-album-form", function(e) {
                 e.preventDefault();
                 let $form = $(this);
-                $btn = $(".addalbum");
+                $btn = $(".add-album");
                 let url = "{{ route('auth.albums.add') }}";
-                $btn.prop("disabled", true).html("<i class='fa fa-spinner fa-spin'></i>")
-
 
                 let formdata = new FormData($form[0]);
                 formdata.append('_token', '{{ csrf_token() }}');
@@ -278,11 +349,22 @@
                     processData: false,
                     contentType: false,
                     enctype: 'multipart/form-data',
+                    beforeSend: function(){
+                        $btn.prop("disabled", true).html("<i class='fa fa-spinner fa-spin'></i> Adding...")
+                    },
                     success: function(response) {
                         if (response.success) {
                             $(".albums-datatable").DataTable().ajax.reload(null, false);
                             $form.closest('.modal').modal('hide');
-                            window.location.reload();
+                            $form[0].reset();
+                            AddEditor.setData('');
+                            // reset upload image preview area
+                            $form.find(".delete-images-btn").addClass("d-none");
+                            $form.find(".image-preview").remove();
+                            $("#add-album").parent().show();
+                            $("#add-album").val(null);
+
+                            // window.location.reload();
                             toastr.success(response.success, "Congrats!").window;
                         } else if (response.error) {
                             toastr.error(response.error);
@@ -295,53 +377,51 @@
                             toastr.error(
                                 $.map(response.responseJSON.errors, function(value, index) {
                                     return value;
-                                }).join("\n"));
+                                }).join("<br>"));
                         } else if (response.responseJSON.error) {
-                            toastr.error(data.responseJSON.error);
+                            toastr.error(response.responseJSON.error);
                         } else {
                             toastr.error("Something went wrong. Please try again later.");
                         }
                     },
                     complete: function() {
-                        form.find(":submit").prop("disabled", false).html("Save Changes");
+                        $btn.prop("disabled", false).html("Add Album");
                     }
                 });
             });
 
             $(document).on("click", ".edit-album-btn", function() {
                 let $btn = $(this);
-
                 let id = $btn.data('id');
-                let name = $btn.data('name');
-                let description = $btn.data('description');
-                let status = $btn.data('status');
-
                 let $modal = $('#update-album-modal-id');
 
                 $modal.find("[name=id]").val(id)
-                $modal.find("[name=name]").val(name)
-                $modal.find("[name=description]").val(description)
-                $modal.find("[name=status]").val(status)
 
                 $.ajax({
-                    url:"{{ route('auth.media') }}",
+                    url:"{{ route('auth.album.detail') }}",
                     type: 'GET',
                     data: {id:id},
                     dataType: 'json',
                     success: function(response) {
                         if (response.success) {
                             // toastr.success(response.success, "Congrats!");
-                            let image = response.data;
+                            let image = response.album.media;
                             var images = '';
                             $.each(image, function(k, v){
-                                console.log(k, v);
                                 images +=""
                                 images += `<div class='col-auto p-1 mb-2 rounded position-relative'>
                                                 <button type="button" class='btn btn-sm btn-danger remove-album rounded-circle px-1 py-0 position-absolute top-0 end-0' data-id='${v.id}'><i class='fa fa-times'></i></button>
                                                 <div class="rounded" style="width:100px;height:100px;background:url({{ asset('images/albums') }}/${v.name}) center no-repeat;background-size:cover;"></div>
                                             </div>`;
-                            $("#update-album-modal-id").find(".media-container .old-media-container").html(images);
+
                             });
+                            $modal.find(".media-container .old-media-container").html(images);
+                            $modal.find("[name=title]").val(response.album.name)
+                            $modal.find("[name=description]").val(response.album.description)
+                            $modal.find("[name=status]").prop("checked", response.album.status ? true : false)
+                            UpdateEditor.setData(response.album.description);
+
+                            $modal.modal("show");
                         } else if (response.error) {
                             toastr.error(response.error);
                         } else {
@@ -355,7 +435,7 @@
                                     return value;
                                 }).join("\n"));
                         } else if (response.responseJSON.error) {
-                            toastr.error(data.responseJSON.error);
+                            toastr.error(response.responseJSON.error);
                         } else {
                             toastr.error("Something went wrong. Please try again later.");
                         }
@@ -405,7 +485,7 @@
                                     return value;
                                 }).join("\n"));
                         } else if (response.responseJSON.error) {
-                            alert(data.responseJSON.error);
+                            alert(response.responseJSON.error);
                         } else {
                             alert("Something went wrong. Please try again later.");
                         }
@@ -451,7 +531,7 @@
                                 }).join("\n"));
                         }
                         else if(response.responseJSON.error){
-                            toastr.error(data.responseJSON.error);
+                            toastr.error(response.responseJSON.error);
                         }
                         else{
                             toastr.error("Something went wrong. Please try again later.");
