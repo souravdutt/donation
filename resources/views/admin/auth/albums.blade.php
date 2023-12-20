@@ -419,7 +419,6 @@
                             $modal.find("[name=title]").val(response.album.name)
                             $modal.find("[name=description]").val(response.album.description)
                             $modal.find("[name=status]").prop("checked", response.album.status ? true : false)
-                            UpdateEditor.setData(response.album.description);
 
                             $modal.modal("show");
                         } else if (response.error) {
