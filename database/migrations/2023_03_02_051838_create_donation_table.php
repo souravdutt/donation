@@ -17,11 +17,11 @@ return new class extends Migration
             $table->id();
             $table->string('session_id');
             $table->decimal('amount')->unsigned();
-            $table->enum('status',['unpaid', 'paid', 'failed']);
+            $table->enum('status', ['unpaid', 'paid', 'failed']);
             $table->string('name');
-            $table->string('email');
-            $table->string('mobile');
-            $table->string('street_address')->default(null);
+            $table->string('email')->nullable();
+            $table->string('mobile')->nullable();
+            $table->string('street_address')->nullable();
             $table->bigInteger('city_id')->unsigned();
             $table->integer('state_id')->unsigned();
             $table->integer('country_id')->unsigned();

@@ -1,8 +1,10 @@
 # Donation!
 **Let's make something useful for this world.**
 
-A laravel web app for charity donation.
+_**Donation**_ is an open-source Laravel-based initiative designed to empower individuals and organizations worldwide to easily initiate charity campaigns. With this project, anyone can create, customize, and launch their own charity platform, enabling the global community to contribute and support causes that matter most.
 
+## Demo
+You can see the demo [Here](https://demo-donation.techgeeta.com/)
 
 ## Installation guid
 * Clone repo:
@@ -60,7 +62,9 @@ A laravel web app for charity donation.
     - https://raw.githubusercontent.com/dr5hn/countries-states-cities-database/master/sql/world.sql
 
 ### Want to contribute?
-Most welcome of new contributors.
+Contributions and suggestions are welcomed! Feel free to fork the project, make enhancements, and submit pull requests to help improve the platform's functionality and impact.
+
+Join us in making a difference with _Donation_ Project!
 
 ### License?
 MIT License
