@@ -72,7 +72,7 @@ class CheckoutController extends Controller
             $donation->email = $request->email;
             $donation->name = $request->first_name. ' ' . $request->last_name;
             $donation->session_id = $session->id;
-            $donation->add_to_leaderboard=$request->add_to_leaderboard;
+            $donation->add_to_leaderboard = $request->add_to_leaderboard ?: 'no';
             $donation->save();
         }catch(\Exception $e){
             return redirect()->back()->with(['error' => 'Unable to process checkout. [' .$e->getMessage() .']'])->withInput();

@@ -25,7 +25,7 @@ return new class extends Migration
             $table->bigInteger('city_id')->unsigned();
             $table->integer('state_id')->unsigned();
             $table->integer('country_id')->unsigned();
-            $table->enum('add_to_leaderboard', ['yes', 'no']);
+            $table->enum('add_to_leaderboard', ['yes', 'no'])->default('no');
             $table->timestamps();
         });
     }
