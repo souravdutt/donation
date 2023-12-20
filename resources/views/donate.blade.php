@@ -191,7 +191,7 @@
                                         value="{{ old('email') }}" placeholder="Email Address">
                                 </div>
                                 <div class="col-md-6">
-                                    <label class="mb-0">Mobile numb-mder</label>
+                                    <label class="mb-0">Mobile number</label>
                                     <input type="text" class="form-control mb-3 optional mobile" name="mobile"
                                         value="{{ old('mobile') }}" placeholder="Mobile number">
                                 </div>
