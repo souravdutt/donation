@@ -4,16 +4,16 @@
 <div class="w-100 h-100">
     <div class="position-fixed w-100 h-100 z-n1 overflow-hidden">
         <div class="position-absolute w-100 h-100 bg-dark opacity-75 z-2"></div>
-        <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade" data-bs-ride="carousel" data-bs-interval="5000">
-            <div class="carousel-inner">
-                <div class="carousel-item active">
-                    <img src="{{ asset("images/3.jpg")}}" class="d-block w-100" alt="...">
+        <div id="carouselExampleSlidesOnly" class="carousel slide carousel-fade h-100" data-bs-ride="carousel" data-bs-interval="5000">
+            <div class="carousel-inner h-100">
+                <div class="carousel-item h-100 active">
+                    <img src="{{ asset("images/3.jpg")}}" class="d-block object-fit-cover h-100 w-100" alt="...">
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset("images/2.jpg")}}" class="d-block w-100" alt="...">
+                <div class="carousel-item h-100">
+                    <img src="{{ asset("images/2.jpg")}}" class="d-block object-fit-cover h-100 w-100" alt="...">
                 </div>
-                <div class="carousel-item">
-                    <img src="{{ asset("images/4.jpg")}}" class="d-block w-100" alt="...">
+                <div class="carousel-item h-100">
+                    <img src="{{ asset("images/4.jpg")}}" class="d-block object-fit-cover h-100 w-100" alt="...">
                 </div>
             </div>
         </div>
@@ -54,7 +54,7 @@
 
         <footer class="mt-auto text-white-50">
             <ul class="list-inline">
-                <p><small>&copy; Copyright 2023</small> </p>
+                <p><small>&copy; Copyright {{ now()->format('Y') }}</small> </p>
             </ul>
         </footer>
     </div>

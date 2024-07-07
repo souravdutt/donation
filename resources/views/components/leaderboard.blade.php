@@ -18,7 +18,7 @@
                     <tr>
                         <td>{{ $donor->name }}</td>
                         <td class="text-center">{{ $donor->city_name }}, {{ $donor->country_name }}</td>
-                        <td class="text-center">{{ date('d M, Y'), strtotime($donor->created_at) }}</td>
+                        <td class="text-center">{{ $donor->created_at?->format('d M, Y') }}</td>
                         <td class="text-end">({{ env("DONATION_CURRENCY", "INR") }}) {{ number_format($donor->amount, 2, '.', ',') }}</td>
                     </tr>
                 @endforeach

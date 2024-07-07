@@ -129,7 +129,9 @@
 @section('javascript')
 <script>
     $(function(){
-        $('form').on("submit", function(){
+        $('form').on("submit", function(e){
+            e.preventDefault();
+
             let $form = $(this);
             let has_error = false;
             $.each($form.find("input.required"), function(){
@@ -141,6 +143,7 @@
                     $field.removeClass("is-invalid");
                 }
             })
+
             $.each($form.find("select.required"), function(){
                 let $field = $(this);
                 if($field.val().trim() == ""){
@@ -150,6 +153,7 @@
                     $field.removeClass("is-invalid");
                 }
             })
+
             $.each($form.find("textarea.required"), function(){
                 let $field = $(this);
                 if($field.val().trim() == ""){
@@ -159,11 +163,14 @@
                     $field.removeClass("is-invalid");
                 }
             });
+
             if(has_error){
                 toastr.error("Please fill in all required fields.", "Oops!")
                 return false;
             }
+
             $form.find(":submit").prop("disabled",true).html("<i class='fa fa-spin fa-spinner'></i> Please wait...");
+            $form.unbind("submit").submit();
         });
     });
 </script>

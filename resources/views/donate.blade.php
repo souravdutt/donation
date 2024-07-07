@@ -174,6 +174,19 @@
                                     {{ Session::get('success') }}
                                 </div>
                             @endif
+
+
+                            <div class="alert alert-primary alert-dismissible fade show" role="alert">
+                                <button type="button" class="btn-close" data-bs-dismiss="alert"
+                                    aria-label="Close"></button>
+
+                                <div class="d-flex gap-2 flex-wrap align-items-center">
+                                    <strong>Test CC Details:</strong>
+                                    <span class="badge text-bg-light text-secondary">4111 1111 1111 1111</span>
+                                    <span class="badge text-bg-light text-secondary">{{ now()->addMonths(rand(15, 50))->format('m/y') }}</span>
+                                    <span class="badge text-bg-light text-secondary">{{ rand(100, 999) }}</span>
+                                </div>
+                            </div>
                             <div class="row">
                                 <div class="col-md-6">
                                     <label class="mb-0">First name</label>

@@ -29,7 +29,9 @@ class HomeController extends Controller
             ->where('add_to_leaderboard', 'yes')
             ->orderby('amount', 'DESC')
             ->orderBy('created_at', 'DESC')
-            ->take(10)->get();
+            ->take(10)
+            ->get();
+
         return view('donate', compact('donors'));
     }
 
