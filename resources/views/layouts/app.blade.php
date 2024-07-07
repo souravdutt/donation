@@ -94,14 +94,17 @@
         <ul class="list-inline">
             <li class="list-inline-item"><a href="{{ route('home.privacy-policy') }}" class="text-decoration-none">Privacy Policy</a></li>
         </ul>
-        <p class="mb-1">&copy; Copyright 2023</p>
+        <p class="mb-1">&copy; Copyright {{ now()->format('Y') }}</p>
     </footer>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script src="{{ asset('bootstrap/js/bootstrap.bundle.js') }}"></script>
     <script src="https://code.jquery.com/jquery-3.6.3.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js" integrity="sha512-VEd+nq25CkR676O+pLBnDW09R7VQX9Mdiij052gVCp5yVH3jGtH70Ho/UUv4mJDsEdTvqRCFZg0NKGiojGnUCw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script>
+        toastr.options = {
+            "closeButton": true,
+        }
         $(function(){
             $("input.mobile").on("keyup", function(){
                 let str = $(this).val();
