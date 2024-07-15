@@ -24,20 +24,18 @@
                 <h3 class="float-md-start mb-0">{{ env('APP_NAME') }}</h3>
                 <nav class="nav nav-masthead justify-content-center float-md-end">
                     <a class="nav-link fw-bold py-1 px-0
-                        @if(Route::is('home.index')) active @endif" aria-current="page"
-                        href="{{ route('home.index') }}">Home</a>
+                        @if(Route::is('home.index')) active @endif" aria-current="page" href="{{ route('home.index') }}">Home</a>
                     <a class="nav-link fw-bold py-1 px-0
-                        @if(Route::is('home.donate')) active @endif" aria-current="page"
-                        href="{{ route('home.donate') }}" href="{{ route('home.donate') }}">Donate</a>
+                        @if(Route::is('home.donate')) active @endif" aria-current="page" href="{{ route('home.donate') }}" href="{{ route('home.donate') }}">Donate</a>
                     <a class="nav-link fw-bold py-1 px-0
-                        @if(Route::is('home.about')) active @endif" aria-current="page"
-                        href="{{ route('home.about') }}" href="{{ route('home.about') }}">About Us</a>
+                        @if(Route::is('home.about')) active @endif" aria-current="page" href="{{ route('home.about') }}" href="{{ route('home.about') }}">About Us</a>
                     <a class="nav-link fw-bold py-1 px-0
-                        @if(Route::is('home.albums')) active @endif" aria-current="page"
-                        href="{{ route('home.albums') }}" href="{{ route('home.albums') }}">Gallery</a>
+                        @if(Route::is('home.albums')) active @endif" aria-current="page" href="{{ route('home.albums') }}" href="{{ route('home.albums') }}">Gallery</a>
                     <a class="nav-link fw-bold py-1 px-0
-                        @if(Route::is('home.contact')) active @endif" aria-current="page"
-                        href="{{ route('home.contact') }}" href="{{ route('home.contact') }}">Contact</a>
+                        @if(Route::is('home.contact')) active @endif" aria-current="page" href="{{ route('home.contact') }}" href="{{ route('home.contact') }}">Contact</a>
+                    <a class="nav-link border rounded px-2 py-1 ms-3" href="https://github.com/souravdutt/donation" target="_blank">
+                        <i class="fab fa-github fa-lg"></i>
+                    </a>
                 </nav>
             </div>
         </header>
