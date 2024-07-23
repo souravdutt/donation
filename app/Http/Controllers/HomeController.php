@@ -62,7 +62,7 @@ class HomeController extends Controller
             ->where('albums.status', 1)
             ->first();
 
-        if (!$album) return redirect()->back()->with('error', 'Album does not axists');
+        if (!$album) return redirect()->route('home.albums')->with('error', 'Album does not exists');
 
         return view('album', compact('album'));
     }

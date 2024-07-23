@@ -6,7 +6,14 @@
             <div class="container">
                 <div class="row">
                   <div class="col-md-12">
+                    <div class="d-flex justify-content-between mb-2 text-end">
+                        <span class="text-muted">
+                        {{ $album->created_at?->format('M d, \'y') }}
+                        </span>
+                        <a href="https://wa.me/?text=Checkout%20this%20amazing%20gallery%0A{{ route('home.album', $album->id) }}" class="btn btn-success btn-sm" target="_blank"><i class="fab fa-whatsapp fa-lg text-light"></i> Share</a>
+                    </div>
                     <div class="card mb-4 box-shadow">
+
                       <div id="carousel{{$album->id}}" class="carousel slide">
                         <div class="carousel-inner">
                           @foreach($album->media as $k => $media)
@@ -25,16 +32,8 @@
                         </button>
                       </div>
                       <div class="card-body">
-                          <div class="d-flex justify-content-between">
-                            <divs>
-                              Date: {{ !empty($album->created_at) ? date('d-m-Y', strtotime($album->created_at)) : date('y-m-d') }}
-                            </div>
-                            <div>
-                              <a href="https://wa.me/?text=Checkout this amazing gallery {{ url('/albums') }}" class="btn btn-warning btn-sm"><i class="fa fa-share-alt"></i> Share</a>
-                            </div>
-                          </div>
-                          <h6 class="card-text"><b>{{$album->name}}</b></h6>
-                          <small class="card-text text-italic">{!! $album->description !!}</small>
+                          <h2 class="card-text fw-bold">{{$album->name}}</h2>
+                          <div class="card-text">{!! $album->description !!}</div>
                           <div class="d-flex justify-content-between align-items-center">
                         </div>
                       </div>

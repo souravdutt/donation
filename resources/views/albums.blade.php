@@ -46,9 +46,9 @@
                           <div class="d-flex justify-content-between align-items-center">
                         </div>
                       </div>
-                      <div class="card-footer bg-white text-end">
-                        <a href="https://wa.me/?text=Checkout this amazing gallery {{ route('/albums') }}" class="btn btn-warning btn-sm"><i class="fa fa-share-alt"></i> Share</a>
-                        <a href="{{ route('album', $album->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Read More</a>
+                      <div class="card-footer d-flex justify-content-between bg-white text-end">
+                        <a href="https://wa.me/?text=Checkout%20this%20amazing%20gallery%0A{{ route('home.album', $album->id) }}" class="btn btn-success btn-sm" target="_blank"><i class="fab fa-whatsapp fa-lg text-light"></i> Share</a>
+                        <a href="{{ route('home.album', $album->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Read More</a>
                       </div>
                     </div>
                   </div>
