@@ -55,16 +55,16 @@ class HomeController extends Controller
         return view('albums',compact('albums'));
     }
 
-    public function detailsalbum($id)
+    public function album($id)
     {
         $album = Albums::where('id', $id)
             ->with('media')
             ->where('albums.status', 1)
             ->first();
 
-        if (!$album) return redirect()->back()->with('error', 'Album doesn\t axists');
+        if (!$album) return redirect()->back()->with('error', 'Album does not axists');
 
-        return view('detailsalbum', compact('album'));
+        return view('album', compact('album'));
     }
 
     public function contactSubmit(Request $request)
