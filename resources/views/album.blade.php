@@ -2,27 +2,18 @@
 
 @section('content')
     <main role="main">
-
-        <section class="jumbotron text-center">
-            <div class="container">
-                <h1 class="jumbotron-heading mt-5">Album</h1>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem alias, minima ut,
-                    ab repudiandae nostrum mollitia vero, vel sit deserunt molestias fugit inventore
-                    dicta omnis natus aut culpa. Quos pariatur, a voluptates minima nemo fugiat amet
-                    non corporis, quaerat placeat esse tempora exercitationem dicta distinctio quasi
-                    vel accusantium nulla modi.
-                </p>
-            </div>
-        </section>
-
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                  @foreach($albums as $album)
-                  {{-- card --}}
-                  <div class="col-md-4">
+                  <div class="col-md-12">
+                    <div class="d-flex justify-content-between mb-2 text-end">
+                        <span class="text-muted">
+                        {{ $album->created_at?->format('M d, \'y') }}
+                        </span>
+                        <a href="https://wa.me/?text=Checkout%20this%20amazing%20gallery%0A{{ route('home.album', $album->id) }}" class="btn btn-success btn-sm" target="_blank"><i class="fab fa-whatsapp fa-lg text-light"></i> Share</a>
+                    </div>
                     <div class="card mb-4 box-shadow">
+
                       <div id="carousel{{$album->id}}" class="carousel slide">
                         <div class="carousel-inner">
                           @foreach($album->media as $k => $media)
@@ -41,20 +32,12 @@
                         </button>
                       </div>
                       <div class="card-body">
-                          <h6 class="card-text"><b>{{$album->name}}</b></h6>
-                          <small class="card-text text-italic">{{\Str::words(strip_tags($album->description), 10, '...')}}</small>
+                          <h2 class="card-text fw-bold">{{$album->name}}</h2>
+                          <div class="card-text">{!! $album->description !!}</div>
                           <div class="d-flex justify-content-between align-items-center">
                         </div>
                       </div>
-                      <div class="card-footer d-flex justify-content-between bg-white text-end">
-                        <a href="https://wa.me/?text=Checkout%20this%20amazing%20gallery%0A{{ route('home.album', $album->id) }}" class="btn btn-success btn-sm" target="_blank"><i class="fab fa-whatsapp fa-lg text-light"></i> Share</a>
-                        <a href="{{ route('home.album', $album->id) }}" class="btn btn-warning btn-sm"><i class="fa fa-eye"></i> Read More</a>
-                      </div>
                     </div>
-                  </div>
-                  @endforeach
-                  <div class="d-flex justify-content-center mt-2">
-                    {{ $albums->onEachSide(0)->links() }}
                   </div>
                 </div>
             </div>

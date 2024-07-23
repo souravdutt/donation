@@ -88,6 +88,7 @@ Route::get('about', [HomeController::class, 'about'])->name('home.about');
 Route::get('leaderboard', [HomeController::class, 'leaderboard'])->name('home.leaderboard');
 Route::get('donate', [HomeController::class, 'donate'])->name('home.donate');
 Route::get('albums', [HomeController::class, 'albums'])->name('home.albums');
+Route::get('album/{id}', [HomeController::class, 'album'])->name('home.album');
 Route::get('privacy', [HomeController::class, 'privacy'])->name('home.privacy-policy');
 # Contact Form
 Route::post('contact', [HomeController::class, 'contactSubmit'])->name('home.contact.submit');

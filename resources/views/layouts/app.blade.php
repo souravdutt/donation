@@ -60,6 +60,13 @@
 
     <x-navbar />
 
+    @if (Session::has('error'))
+        <div class="alert alert-danger alert-dismissible fade show sticky-top rounded-0 py-1" role="alert">
+            {{ Session::get('error') }}
+            <button type="button" class="btn-close py-2" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    @endif
+
     @yield('content')
 
     <footer class="my-5 pt-5 text-muted text-center text-small">
