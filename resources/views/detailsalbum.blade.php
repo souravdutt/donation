@@ -2,26 +2,10 @@
 
 @section('content')
     <main role="main">
-
-        <section class="jumbotron text-center">
-            <div class="container">
-                <h1 class="jumbotron-heading mt-5">Album</h1>
-                <p>
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorem alias, minima ut,
-                    ab repudiandae nostrum mollitia vero, vel sit deserunt molestias fugit inventore
-                    dicta omnis natus aut culpa. Quos pariatur, a voluptates minima nemo fugiat amet
-                    non corporis, quaerat placeat esse tempora exercitationem dicta distinctio quasi
-                    vel accusantium nulla modi.
-                </p>
-            </div>
-        </section>
-
         <div class="album py-5 bg-light">
             <div class="container">
                 <div class="row">
-                  @foreach($albums as $album)
-                  {{-- card --}}
-                  <div class="col-md-4">
+                  <div class="col-md-12">
                     <div class="card mb-4 box-shadow">
                       <div id="carousel{{$album->id}}" class="carousel slide">
                         <div class="carousel-inner">
@@ -41,20 +25,20 @@
                         </button>
                       </div>
                       <div class="card-body">
+                          <div class="d-flex justify-content-between">
+                            <div>
+                              Date: {{ Auth::check() ? $album->created_at : date('y-m-d') }}
+                            </div>
+                            <div>
+                              <a href="https://wa.me/?text=Checkout this amazing gallery {{ url('/albums') }}" class="btn btn-warning btn-sm"><i class="fa fa-share-alt"></i> Share</a>
+                            </div>
+                          </div>
                           <h6 class="card-text"><b>{{$album->name}}</b></h6>
-                          <small class="card-text text-italic">{{\Str::words(strip_tags($album->description), 10, '...')}}</small>
+                          <small class="card-text text-italic">{!! $album->description !!}</small>
                           <div class="d-flex justify-content-between align-items-center">
                         </div>
                       </div>
-                      <div class="card-footer bg-white text-end">
-                        <a href="https://wa.me/?text=Checkout this amazing gallery {{ url('/albums') }}" class="btn btn-warning btn-sm"><i class="fa fa-share-alt"></i> Share</a>
-                        <a href="{{ url('detailsalbum', $album->id) }}" class="btn btn-primary btn-sm"><i class="fa fa-eye"></i> Read More</a>
-                      </div>
                     </div>
-                  </div>
-                  @endforeach
-                  <div class="d-flex justify-content-center mt-2">
-                    {{ $albums->onEachSide(0)->links() }}
                   </div>
                 </div>
             </div>

@@ -49,9 +49,22 @@ class HomeController extends Controller
         $albums = Albums::select('*')
             ->with('media')
             ->where('albums.status', 1)
+            ->orderBy('id', 'DESC')
             ->paginate(12);
 
         return view('albums',compact('albums'));
+    }
+
+    public function detailsalbum($id)
+    {
+        $album = Albums::where('id', $id)
+            ->with('media')
+            ->where('albums.status', 1)
+            ->first();
+
+        if (!$album) return redirect()->back()->with('error', 'Album doesn\t axists');
+
+        return view('detailsalbum', compact('album'));
     }
 
     public function contactSubmit(Request $request)
