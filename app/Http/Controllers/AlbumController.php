@@ -44,7 +44,15 @@ class AlbumController extends Controller
             //validate all request keys
             $request->validate([
                 'title' => 'required|string|min:20|max:100',
-                'description' => 'required|min:50',
+                'description' => [
+                        'required',
+                        'min:50',
+                        function ($attribute, $value, $fail) {
+                            if (strpos($value, '&lt;script') !== false || strpos($value, '&lt;/script') !== false) {
+                                $fail('Oops!<br>Script tags are not allowed.');
+                            }
+                        },
+                    ],
                 'images' => 'required|array',
                 'status' => 'nullable',
             ]);
@@ -103,11 +111,18 @@ class AlbumController extends Controller
         if(request()->ajax()) {
             if(auth()->user()->role !== 'admin')
                 return response()->json(['error' => 'You\'re not authorized'], 401);
-
             $request->validate([
                 'id'    =>'required|integer',
                 'title' => 'required|string|min:20|max:100',
-                'description' => 'required|min:50',
+                'description' => [
+                        'required',
+                        'min:50',
+                        function ($attribute, $value, $fail) {
+                            if (strpos($value, '&lt;script') !== false || strpos($value, '&lt;/script') !== false) {
+                                $fail('Oops!<br>Script tags are not allowed.');
+                            }
+                        },
+                    ],
                 'status' => 'nullable',
                 'images' => 'nullable|array',
             ]);
