@@ -48,8 +48,9 @@ class AlbumController extends Controller
                         'required',
                         'min:50',
                         function ($attribute, $value, $fail) {
-                            if (strpos($value, '&lt;script') !== false || strpos($value, '&lt;/script') !== false) {
-                                $fail('Oops!<br>Script tags are not allowed.');
+                            if (preg_match('/<script\b[^>]*>(.*?)<\/script>/is', $value) ||
+                                preg_match('/&lt;.*?script.*?&gt;.*?&lt;.*?\/script.*?&gt;/is', $value)) {
+                                $fail('Oops! Script tags are not allowed.');
                             }
                         },
                     ],
@@ -118,8 +119,9 @@ class AlbumController extends Controller
                         'required',
                         'min:50',
                         function ($attribute, $value, $fail) {
-                            if (strpos($value, '&lt;script') !== false || strpos($value, '&lt;/script') !== false) {
-                                $fail('Oops!<br>Script tags are not allowed.');
+                            if (preg_match('/<\s*script\b[^>]*>([\s\S]*?)<\/\s*script\s*>/i', $value) ||
+                                preg_match('/&lt;\s*script\b[^&gt;]*&gt;([\s\S]*?)&lt;\s*\/\s*script\s*&gt;/i', $value)) {
+                                $fail('Oops! Script tags are not allowed.');
                             }
                         },
                     ],

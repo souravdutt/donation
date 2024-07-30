@@ -192,13 +192,13 @@
                     AddEditor = editor;
                     editor.model.document.on('change:data', () => {
                         const editorData = editor.getData();
-                        const scriptTagEscapedRegex = /&lt;script\b[^&gt;]*&gt;([\s\S]*?)&lt;\/script&gt;/gi;
-                        if (scriptTagEscapedRegex.test(editorData)) {
+                        
+                        const scriptTagRegex = /<script\b[^>]*>(.*?)<\/\s*script\s*>/is;
+                        const encodedScriptTagRegex = /&lt;.*?script.*?&gt;.*?&lt;.*?\/\s*script\s*?&gt;/is;
+                        if (scriptTagRegex.test(editorData) || encodedScriptTagRegex.test(editorData)) {
                             toastr.error('Script tags are not allowed.', 'Oops!');
-
-                            const cleanedData = editorData.replace(scriptTagEscapedRegex, '');
+                            const cleanedData = editorData.replace(scriptTagRegex, '').replace(encodedScriptTagRegex, '');
                             editor.setData(cleanedData);
-
                         }
 
                     });
@@ -220,13 +220,12 @@
                     UpdateEditor = editor;
                     editor.model.document.on('change:data', () => {
                         const editorData = editor.getData();
-                        const scriptTagEscapedRegex = /&lt;script\b[^&gt;]*&gt;([\s\S]*?)&lt;\/script&gt;/gi;
-                        if (scriptTagEscapedRegex.test(editorData)) {
+                        const scriptTagRegex = /<script\b[^>]*>(.*?)<\/\s*script\s*>/is;
+                        const encodedScriptTagRegex = /&lt;.*?script.*?&gt;.*?&lt;.*?\/\s*script\s*?&gt;/is;
+                        if (scriptTagRegex.test(editorData) || encodedScriptTagRegex.test(editorData)) {
                             toastr.error('Script tags are not allowed.', 'Oops!');
-
-                            const cleanedData = editorData.replace(scriptTagEscapedRegex, '');
+                            const cleanedData = editorData.replace(scriptTagRegex, '').replace(encodedScriptTagRegex, '');
                             editor.setData(cleanedData);
-
                         }
 
                     });
