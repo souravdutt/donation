@@ -44,7 +44,16 @@ class AlbumController extends Controller
             //validate all request keys
             $request->validate([
                 'title' => 'required|string|min:20|max:100',
-                'description' => 'required|min:50',
+                'description' => [
+                        'required',
+                        'min:50',
+                        function ($attribute, $value, $fail) {
+                            if (preg_match('/<script\b[^>]*>(.*?)<\/script>/is', $value) ||
+                                preg_match('/&lt;.*?script.*?&gt;.*?&lt;.*?\/script.*?&gt;/is', $value)) {
+                                $fail('Oops! Script tags are not allowed.');
+                            }
+                        },
+                    ],
                 'images' => 'required|array',
                 'status' => 'nullable',
             ]);
@@ -103,11 +112,19 @@ class AlbumController extends Controller
         if(request()->ajax()) {
             if(auth()->user()->role !== 'admin')
                 return response()->json(['error' => 'You\'re not authorized'], 401);
-
             $request->validate([
                 'id'    =>'required|integer',
                 'title' => 'required|string|min:20|max:100',
-                'description' => 'required|min:50',
+                'description' => [
+                        'required',
+                        'min:50',
+                        function ($attribute, $value, $fail) {
+                            if (preg_match('/<\s*script\b[^>]*>([\s\S]*?)<\/\s*script\s*>/i', $value) ||
+                                preg_match('/&lt;\s*script\b[^&gt;]*&gt;([\s\S]*?)&lt;\s*\/\s*script\s*&gt;/i', $value)) {
+                                $fail('Oops! Script tags are not allowed.');
+                            }
+                        },
+                    ],
                 'status' => 'nullable',
                 'images' => 'nullable|array',
             ]);

@@ -186,11 +186,24 @@
                 .create( document.querySelector( 'textarea.editor' ),{
                     ckfinder: {
                         uploadUrl: "{{ route('auth.upload.media', 'album') . '?_token=' . csrf_token() }}",
-                    }
+                    },
                 })
                 .then( editor => {
                     AddEditor = editor;
-                    // console.log( editor );
+                    editor.model.document.on('change:data', () => {
+                        const editorData = editor.getData();
+                        
+                        const scriptTagRegex = /<script\b[^>]*>(.*?)<\/\s*script\s*>/is;
+                        const encodedScriptTagRegex = /&lt;.*?script.*?&gt;.*?&lt;.*?\/\s*script\s*?&gt;/is;
+                        if (scriptTagRegex.test(editorData) || encodedScriptTagRegex.test(editorData)) {
+                            toastr.error('Script tags are not allowed.', 'Oops!');
+                            const cleanedData = editorData.replace(scriptTagRegex, '').replace(encodedScriptTagRegex, '');
+                            editor.setData(cleanedData);
+                        }
+
+                    });
+
+                    
                 })
                 .catch( error => {
                     console.error( error );
@@ -205,6 +218,17 @@
                 })
                 .then( editor => {
                     UpdateEditor = editor;
+                    editor.model.document.on('change:data', () => {
+                        const editorData = editor.getData();
+                        const scriptTagRegex = /<script\b[^>]*>(.*?)<\/\s*script\s*>/is;
+                        const encodedScriptTagRegex = /&lt;.*?script.*?&gt;.*?&lt;.*?\/\s*script\s*?&gt;/is;
+                        if (scriptTagRegex.test(editorData) || encodedScriptTagRegex.test(editorData)) {
+                            toastr.error('Script tags are not allowed.', 'Oops!');
+                            const cleanedData = editorData.replace(scriptTagRegex, '').replace(encodedScriptTagRegex, '');
+                            editor.setData(cleanedData);
+                        }
+
+                    });
                 })
                 .catch( error => {
                     console.error( error );
@@ -213,6 +237,7 @@
             loadTable(".albums-datatable");
 
             function loadTable(table, data = {}) {
+                console.log(data);
                 $(table).DataTable({
                     ajax: {
                         url: '{{ route('auth.albums') }}',
@@ -417,7 +442,11 @@
                             });
                             $modal.find(".media-container .old-media-container").html(images);
                             $modal.find("[name=title]").val(response.album.name)
-                            $modal.find("[name=description]").val(response.album.description)
+                            // $modal.find("[name=description]").val(response.album.description)
+                            if(UpdateEditor)
+                            {
+                                UpdateEditor.setData(response.album.description);
+                            }
                             $modal.find("[name=status]").prop("checked", response.album.status ? true : false)
 
                             $modal.modal("show");
