@@ -192,16 +192,21 @@
                     AddEditor = editor;
                     editor.model.document.on('change:data', () => {
                         const editorData = editor.getData();
-                        
-                        const scriptTagRegex = /<script\b[^>]*>(.*?)<\/\s*script\s*>/is;
-                        const encodedScriptTagRegex = /&lt;.*?script.*?&gt;.*?&lt;.*?\/\s*script\s*?&gt;/is;
-                        if (scriptTagRegex.test(editorData) || encodedScriptTagRegex.test(editorData)) {
-                            toastr.error('Script tags are not allowed.', 'Oops!');
-                            const cleanedData = editorData.replace(scriptTagRegex, '').replace(encodedScriptTagRegex, '');
-                            editor.setData(cleanedData);
-                        }
+                        const decodedData = decodeHtmlEntities(editorData);
+
+                            // Check for script tags (both standard and encoded)
+                            const scriptTagEscapedRegex = /<\s*script\b[^>]*>[\s\S]*?<\s*\/\s*script\s*>|&lt;\s*script\s*&gt;[\s\S]*?&lt;\s*\/\s*script\s*&gt;/gi;
+                           
+                            if (scriptTagEscapedRegex.test(decodedData)) {
+                                toastr.error('Script tags are not allowed.', 'Oops!');
+                            }
 
                     });
+                    function decodeHtmlEntities(html) {
+                        const textarea = document.createElement('textarea');
+                        textarea.innerHTML = html;
+                        return textarea.value;
+                    }
 
                     
                 })
@@ -220,15 +225,21 @@
                     UpdateEditor = editor;
                     editor.model.document.on('change:data', () => {
                         const editorData = editor.getData();
-                        const scriptTagRegex = /<script\b[^>]*>(.*?)<\/\s*script\s*>/is;
-                        const encodedScriptTagRegex = /&lt;.*?script.*?&gt;.*?&lt;.*?\/\s*script\s*?&gt;/is;
-                        if (scriptTagRegex.test(editorData) || encodedScriptTagRegex.test(editorData)) {
-                            toastr.error('Script tags are not allowed.', 'Oops!');
-                            const cleanedData = editorData.replace(scriptTagRegex, '').replace(encodedScriptTagRegex, '');
-                            editor.setData(cleanedData);
-                        }
+                        const decodedData = decodeHtmlEntities(editorData);
+
+                            // Check for script tags (both standard and encoded)
+                            const scriptTagEscapedRegex = /<\s*script\b[^>]*>[\s\S]*?<\s*\/\s*script\s*>|&lt;\s*script\s*&gt;[\s\S]*?&lt;\s*\/\s*script\s*&gt;/gi;
+                           
+                            if (scriptTagEscapedRegex.test(decodedData)) {
+                                toastr.error('Script tags are not allowed.', 'Oops!');
+                            }
 
                     });
+                    function decodeHtmlEntities(html) {
+                        const textarea = document.createElement('textarea');
+                        textarea.innerHTML = html;
+                        return textarea.value;
+                    }
                 })
                 .catch( error => {
                     console.error( error );
@@ -543,7 +554,7 @@
                     success: function(response){
                         if(response.success){
                             $('#update-album-modal-id').hide();
-                            window.location.reload();
+                            // window.location.reload();
                             toastr.success(response.success, "Congrats!").window;
                         }else if(response.error){
                             toastr.error(response.error);

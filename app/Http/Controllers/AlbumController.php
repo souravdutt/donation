@@ -116,15 +116,25 @@ class AlbumController extends Controller
                 'id'    =>'required|integer',
                 'title' => 'required|string|min:20|max:100',
                 'description' => [
-                        'required',
-                        'min:50',
-                        function ($attribute, $value, $fail) {
-                            if (preg_match('/<\s*script\b[^>]*>([\s\S]*?)<\/\s*script\s*>/i', $value) ||
-                                preg_match('/&lt;\s*script\b[^&gt;]*&gt;([\s\S]*?)&lt;\s*\/\s*script\s*&gt;/i', $value)) {
-                                $fail('Oops! Script tags are not allowed.');
+                    'required',
+                    'min:50',
+                    function ($attribute, $value, $fail) {
+                        $decodedValue = urldecode($value);
+                        $decodedValue = html_entity_decode($decodedValue, ENT_QUOTES, 'UTF-8');
+                        // logger($decodedValue);
+                        $patterns = [
+                            '/<\s*script\s*>/',
+                            '/<\s*\/\s*script\s*>/',
+                        ];
+                
+                        // Check if the value contains any of the defined patterns
+                        foreach ($patterns as $pattern) {
+                            if (preg_match($pattern, $decodedValue)) {
+                                return $fail('You can not add script tags inside description.');
                             }
-                        },
-                    ],
+                        }
+                    },
+                ],
                 'status' => 'nullable',
                 'images' => 'nullable|array',
             ]);
